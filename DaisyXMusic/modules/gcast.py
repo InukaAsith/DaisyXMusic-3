@@ -15,7 +15,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from pyrogram import Client, filters
+from pyrogram import Client
+from pyrogram import filters
 from pyrogram.errors import UserAlreadyParticipant
 import asyncio
 from DaisyXMusic.config import SUDO_USERS
