@@ -19,7 +19,6 @@ from typing import Dict
 from pyrogram import Client
 from pytgcalls import GroupCall
 
-from DaisyXMusic import client
 from DaisyXMusic.config import API_HASH 
 from DaisyXMusic.config import API_ID
 from DaisyXMusic.config import SESSION_NAME
