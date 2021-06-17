@@ -126,4 +126,4 @@ def unmute(chat_id: int) -> int:
     return 0
 
 
-run = pytgcalls.run
+run = client.run
