@@ -118,11 +118,11 @@ def mute(chat_id: int) -> int:
 def unmute(chat_id: int) -> int:
     if chat_id not in active_chats:
         return 2
-    elif not active_chats[chat_id]['muted']:
+    elif not active_chats[chat_id]["muted"]:
         return 1
 
     get_instance(chat_id).set_is_mute(False)
-    active_chats[chat_id]['muted'] = False
+    active_chats[chat_id]["muted"] = False
     return 0
 
 
