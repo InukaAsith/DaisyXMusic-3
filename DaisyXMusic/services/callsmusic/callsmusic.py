@@ -45,7 +45,7 @@ def init_instance(chat_id: int):
         if queues.is_empty(chat_id):
             await stop(chat_id)
         else:
-            instance.input_filename = queues.get(chat_id)['file']
+            instance.input_filename = queues.get(chat_id)["file"]
 
 
 def remove(chat_id: int):
@@ -66,7 +66,7 @@ def get_instance(chat_id: int) -> GroupCall:
 
 async def start(chat_id: int):
     await get_instance(chat_id).start(chat_id)
-    active_chats[chat_id] = {'playing': True, 'muted': False}
+    active_chats[chat_id] = {"playing": True, "muted": False}
 
 
 async def stop(chat_id: int):
@@ -85,33 +85,33 @@ async def set_stream(chat_id: int, file: str):
 def pause(chat_id: int) -> bool:
     if chat_id not in active_chats:
         return False
-    elif not active_chats[chat_id]['playing']:
+    elif not active_chats[chat_id]["playing"]:
         return False
 
     get_instance(chat_id).pause_playout()
-    active_chats[chat_id]['playing'] = False
+    active_chats[chat_id]["playing"] = False
     return True
 
 
 def resume(chat_id: int) -> bool:
     if chat_id not in active_chats:
         return False
-    elif active_chats[chat_id]['playing']:
+    elif active_chats[chat_id]["playing"]:
         return False
 
     get_instance(chat_id).resume_playout()
-    active_chats[chat_id]['playing'] = True
+    active_chats[chat_id]["playing"] = True
     return True
 
 
 def mute(chat_id: int) -> int:
     if chat_id not in active_chats:
         return 2
-    elif active_chats[chat_id]['muted']:
+    elif active_chats[chat_id]["muted"]:
         return 1
 
     get_instance(chat_id).set_is_mute(True)
-    active_chats[chat_id]['muted'] = True
+    active_chats[chat_id]["muted"] = True
     return 0
 
 
