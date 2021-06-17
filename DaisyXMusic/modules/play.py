@@ -54,6 +54,7 @@ from DaisyXMusic.helpers.filters import other_filters
 from DaisyXMusic.helpers.gets import get_file_name
 from DaisyXMusic.services.callsmusic import callsmusic
 from DaisyXMusic.services.callsmusic.callsmusic import client as USER
+from DaisyXMusic.services.callsmusic.callsmusic import GroupCall
 from DaisyXMusic.services.converter.converter import convert
 from DaisyXMusic.services.downloaders import youtube
 from DaisyXMusic.services.queues import queues
