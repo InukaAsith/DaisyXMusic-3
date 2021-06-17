@@ -1,5 +1,6 @@
-from DaisyXMusic.services.queues import queues
-from DaisyXMusic.services.callsmusic.callsmusic import pytgcalls 
-from DaisyXMusic.services.callsmusic.callsmusic import run
+from pyrogram import Client
 
-__all__ = ["queues", "pytgcalls", "run"]
+from DaisyXMusic import config
+
+client = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
+run = client.run
