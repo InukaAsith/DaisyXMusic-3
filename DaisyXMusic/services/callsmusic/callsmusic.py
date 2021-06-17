@@ -16,10 +16,9 @@
 
 from typing import Dict
 
-from pyrogram import Client
 from pytgcalls import GroupCall
 
-from typing import client
+from DaisyXmusic.services import client
 from DaisyXMusic.services.queues import queues
 
 
