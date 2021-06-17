@@ -15,10 +15,12 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-from pyrogram import Client, filters
+from pyrogram import Client
+from pyrogram import filters
 from pyrogram.errors import UserAlreadyParticipant
 import asyncio
-from DaisyXMusic.helpers.decorators import authorized_users_only, errors
+from DaisyXMusic.helpers.decorators import authorized_users_only
+from DaisyXMusic.helpers.decorators import errors
 from DaisyXMusic.services.callsmusic.callsmusic import client as USER
 from DaisyXMusic.config import SUDO_USERS
 
