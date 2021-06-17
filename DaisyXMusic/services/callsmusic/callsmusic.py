@@ -14,15 +14,19 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from typing import Dict
 
 from pyrogram import Client
-from pytgcalls import PyTgCalls
+from pytgcalls import GroupCall
 
-from DaisyXMusic.config import API_HASH, API_ID, SESSION_NAME
-from DaisyXMusic.services.callsmusic import queues
+from DaisyXMusic import client
+from DaisyXMusic.config import API_HASH 
+from DaisyXMusic.config import API_ID
+from DaisyXMusic.config import SESSION_NAME
+from DaisyXMusic.services.queues import queues
 
 client = Client(SESSION_NAME, API_ID, API_HASH)
-pytgcalls = PyTgCalls(client)
+pytgcalls = GroupCall(client)
 
 
 @pytgcalls.on_stream_end()
