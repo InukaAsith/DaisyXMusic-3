@@ -19,13 +19,8 @@ from typing import Dict
 from pyrogram import Client
 from pytgcalls import GroupCall
 
-from DaisyXMusic.config import API_HASH 
-from DaisyXMusic.config import API_ID
-from DaisyXMusic.config import SESSION_NAME
+from typing import client
 from DaisyXMusic.services.queues import queues
-
-client = Client(SESSION_NAME, API_ID, API_HASH)
-pytgcalls = GroupCall(client)
 
 
 instances: Dict[int, GroupCall] = {}
@@ -124,6 +119,3 @@ def unmute(chat_id: int) -> int:
     get_instance(chat_id).set_is_mute(False)
     active_chats[chat_id]["muted"] = False
     return 0
-
-
-run = client.run
