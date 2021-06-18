@@ -5,5 +5,4 @@ from DaisyXMusic import config API_ID
 from DaisyXMusic import config API_HASH
 
 client = Client(SESSION_NAME, API_ID, API_HASH)
-
 run = client.run
