@@ -57,13 +57,11 @@ from DaisyXMusic.helpers.filters import other_filters
 from DaisyXMusic.helpers.gets import get_file_name
 from DaisyXMusic.services.callsmusic import callsmusic
 from DaisyXMusic.services.callsmusic.callsmusic import client as USER
-from DaisyXMusic.services.callsmusic.callsmusic import GroupCall
 from DaisyXMusic.services.converter.converter import convert
 from DaisyXMusic.services.downloaders import youtube
 from DaisyXMusic.services.queues import queues
 
 chat_id = None
-
 
 
 @Client.on_message(filters.command(["channelplaylist","cplaylist"]) & filters.group & ~filters.edited)
@@ -102,7 +100,7 @@ async def playlist(client, message):
 
 
 def updated_stats(chat, queue, vol=100):
-    if chat.id in callsmusic.pytgcalls.active_chats:
+    if chat.id in callsmusic.active_chats:
         # if chat.id in active_chats:
         stats = "Settings of **{}**".format(chat.title)
         if len(que) > 0:
@@ -243,12 +241,12 @@ async def m_cb(b, cb):
 
     the_data = cb.message.reply_markup.inline_keyboard[1][0].callback_data
     if type_ == "cpause":
-        if (chet_id not in callsmusic.pytgcalls.active_chats) or (
-            callsmusic.pytgcalls.active_chats[chet_id] == "paused"
+        if (chet_id not in callsmusic.active_chats) or (
+            callsmusic.active_chats[chet_id] == "paused"
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            callsmusic.pytgcalls.pause_stream(chet_id)
+            callsmusic.pause_stream(chet_id)
 
             await cb.answer("Music Paused!")
             await cb.message.edit(
@@ -256,12 +254,12 @@ async def m_cb(b, cb):
             )
 
     elif type_ == "cplay":
-        if (chet_id not in callsmusic.pytgcalls.active_chats) or (
-            callsmusic.pytgcalls.active_chats[chet_id] == "playing"
+        if (chet_id not in callsmusic.active_chats) or (
+            callsmusic.active_chats[chet_id] == "playing"
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            callsmusic.pytgcalls.resume_stream(chet_id)
+            callsmusic.resume_stream(chet_id)
             await cb.answer("Music Resumed!")
             await cb.message.edit(
                 updated_stats(conv, qeue), reply_markup=r_ply("pause")
@@ -291,20 +289,20 @@ async def m_cb(b, cb):
         await cb.message.edit(msg)
 
     elif type_ == "cresume":
-        if (chet_id not in callsmusic.pytgcalls.active_chats) or (
-            callsmusic.pytgcalls.active_chats[chet_id] == "playing"
+        if (chet_id not in callsmusic.active_chats) or (
+            callsmusic.active_chats[chet_id] == "playing"
         ):
             await cb.answer("Chat is not connected or already playng", show_alert=True)
         else:
-            callsmusic.pytgcalls.resume_stream(chet_id)
+            callsmusic.resume_stream(chet_id)
             await cb.answer("Music Resumed!")
     elif type_ == "cpuse":
-        if (chet_id not in callsmusic.pytgcalls.active_chats) or (
-            callsmusic.pytgcalls.active_chats[chet_id] == "paused"
+        if (chet_id not in callsmusic.active_chats) or (
+            callsmusic.active_chats[chet_id] == "paused"
         ):
             await cb.answer("Chat is not connected or already paused", show_alert=True)
         else:
-            callsmusic.pytgcalls.pause_stream(chet_id)
+            callsmusic.pause_stream(chet_id)
 
             await cb.answer("Music Paused!")
     elif type_ == "ccls":
@@ -332,17 +330,17 @@ async def m_cb(b, cb):
     elif type_ == "cskip":
         if qeue:
             qeue.pop(0)
-        if chet_id not in callsmusic.pytgcalls.active_chats:
+        if chet_id not in callsmusic.active_chats:
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
             queues.queues.task_done(chet_id)
 
             if queues.queues.is_empty(chet_id):
-                callsmusic.pytgcalls.leave_group_call(chet_id)
+                callsmusic.leave_group_call(chet_id)
 
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
-                callsmusic.pytgcalls.change_stream(
+                callsmusic.change_stream(
                     chet_id, queues.queues.get(chet_id)["file"]
                 )
                 await cb.answer("Skipped")
@@ -352,13 +350,13 @@ async def m_cb(b, cb):
                 )
 
     else:
-        if chet_id in callsmusic.pytgcalls.active_chats:
+        if chet_id in callsmusic.active_chats:
             try:
                 callsmusic.queues.clear(chet_id)
             except QueueEmpty:
                 pass
 
-            callsmusic.pytgcalls.leave_group_call(chet_id)
+            callsmusic.leave_group_call(chet_id)
             await cb.message.edit("Successfully Left the Chat!")
         else:
             await cb.answer("Chat is not connected!", show_alert=True)
@@ -573,7 +571,7 @@ async def play(_, message: Message):
         await generate_cover(requested_by, title, views, duration, thumbnail)
         file_path = await convert(youtube.download(url))
     chat_id = chid
-    if chat_id in callsmusic.pytgcalls.active_chats:
+    if chat_id in callsmusic.active_chats:
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = title
@@ -597,7 +595,7 @@ async def play(_, message: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        callsmusic.join_group_call(chat_id, file_path)
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
@@ -708,7 +706,7 @@ async def deezer(client: Client, message_: Message):
     await res.edit("Generating Thumbnail")
     await generate_cover(requested_by, title, artist, duration, thumbnail)
     chat_id = chid
-    if chat_id in callsmusic.pytgcalls.active_chats:
+    if chat_id in callsmusic.active_chats:
         await res.edit("adding in queue")
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
@@ -728,7 +726,7 @@ async def deezer(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        callsmusic.join_group_call(chat_id, file_path)
 
     await res.delete()
 
@@ -841,7 +839,7 @@ async def jiosaavn(client: Client, message_: Message):
     )
     file_path = await convert(wget.download(slink))
     chat_id = chid
-    if chat_id in callsmusic.pytgcalls.active_chats:
+    if chat_id in callsmusic.active_chats:
         position = await queues.put(chat_id, file=file_path)
         qeue = que.get(chat_id)
         s_name = sname
@@ -866,7 +864,7 @@ async def jiosaavn(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        callsmusic.join_group_call(chat_id, file_path)
     await res.edit("Generating Thumbnail.")
     await generate_cover(requested_by, sname, ssingers, sduration, sthumb)
     await res.delete()
