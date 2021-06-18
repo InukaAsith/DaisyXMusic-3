@@ -3,7 +3,7 @@
 <h1 align="centre">DAISYXMUSIC V4.5 🎵</h1>
 
 ### A bot that can play music on Telegram Group and Channel Voice Chats
-#### POWERED BY [PYTGCALLS](https://github.com/pytgcalls/pytgcalls)
+#### POWERED BY [MARSHALX TGCALLS](https://github.com/MarshalX/tgcalls)
 ### Available on telegram as [@DaisyXbot](https://t.me/daisyxbot)
 
 <p align="center">
@@ -128,5 +128,5 @@ DaisyXmusic is a modified version of [Callsmusic](https://github.com/callsmusic/
 - [Hamker Cat](https://github.com/thehamkercat/)
 - [Anjana-Ma](https://github.com/Anjana-Ma): 
 - [ImJanindu](https://github.com/ImJanindu): 
-- [Laky](https://github.com/Laky-64) & [Andrew](https://github.com/AndrewLaneX): PyTgCalls
-- [Original Repo owners](https://github.com/suprojects/CallsMusic)
+- [MARSHALX](https://github.com/MarshalX): TgCalls
+- [Original Repo owners](https://github.com/CallsMusic/CallsMusic)
