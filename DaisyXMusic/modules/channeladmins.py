@@ -68,7 +68,7 @@ async def resume(_, message: Message):
     ):
         await message.reply_text("❗ Nothing is paused!")
     else:
-        callsmusic.pytgcalls.resume_stream(chat_id)
+        callsmusic.resume_stream(chat_id)
         await message.reply_text("⏸ Resumed!")
 
 
@@ -84,7 +84,7 @@ async def stop(_, message: Message):
       await message.reply("Is chat even linked")
       return    
     chat_id = chid
-    if chat_id not in callsmusic.active_calls:
+    if chat_id not in callsmusic.active_chats:
         await message.reply_text("❗ Nothing is streaming!")
     else:
         try:
