@@ -1,8 +1,6 @@
 from pyrogram import Client
 
-from DaisyXMusic import config SESSION_NAME
-from DaisyXMusic import config API_ID
-from DaisyXMusic import config API_HASH
+from DaisyXMusic import config
 
-client = Client(SESSION_NAME, API_ID, API_HASH)
+client = Client(config.SESSION_NAME, config.API_ID, config.API_HASH)
 run = client.run
