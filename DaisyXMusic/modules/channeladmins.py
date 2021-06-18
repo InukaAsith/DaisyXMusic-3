@@ -42,12 +42,12 @@ async def pause(_, message: Message):
       await message.reply("Is chat even linked")
       return    
     chat_id = chid
-    if (chat_id not in callsmusic.pytgcalls.active_calls) or (
-        callsmusic.pytgcalls.active_calls[chat_id] == "paused"
+    if (chat_id not in callsmusic.active_chats) or (
+        callsmusic.active_chats[chat_id] == "paused"
     ):
         await message.reply_text("❗ Nothing is playing!")
     else:
-        callsmusic.pytgcalls.pause_stream(chat_id)
+        callsmusic.pause_stream(chat_id)
         await message.reply_text("▶️ Paused!")
 
 
@@ -63,8 +63,8 @@ async def resume(_, message: Message):
       await message.reply("Is chat even linked")
       return    
     chat_id = chid
-    if (chat_id not in callsmusic.pytgcalls.active_calls) or (
-        callsmusic.pytgcalls.active_calls[chat_id] == "playing"
+    if (chat_id not in callsmusic.active_chats) or (
+        callsmusic.active_chats[chat_id] == "playing"
     ):
         await message.reply_text("❗ Nothing is paused!")
     else:
@@ -84,15 +84,15 @@ async def stop(_, message: Message):
       await message.reply("Is chat even linked")
       return    
     chat_id = chid
-    if chat_id not in callsmusic.pytgcalls.active_calls:
+    if chat_id not in callsmusic.active_calls:
         await message.reply_text("❗ Nothing is streaming!")
     else:
         try:
-            callsmusic.queues.clear(chat_id)
+            queues.queues.clear(chat_id)
         except QueueEmpty:
             pass
 
-        callsmusic.pytgcalls.leave_group_call(chat_id)
+        callsmusic.leave_group_call(chat_id)
         await message.reply_text("❌ Stopped streaming!")
 
 
@@ -109,16 +109,16 @@ async def skip(_, message: Message):
       await message.reply("Is chat even linked")
       return    
     chat_id = chid
-    if chat_id not in callsmusic.pytgcalls.active_calls:
+    if chat_id not in callsmusic.active_chats:
         await message.reply_text("❗ Nothing is playing to skip!")
     else:
-        callsmusic.queues.task_done(chat_id)
+        queues.queues.task_done(chat_id)
 
-        if callsmusic.queues.is_empty(chat_id):
-            callsmusic.pytgcalls.leave_group_call(chat_id)
+        if queues.queues.is_empty(chat_id):
+            callsmusic.leave_group_call(chat_id)
         else:
-            callsmusic.pytgcalls.change_stream(
-                chat_id, callsmusic.queues.get(chat_id)["file"]
+            callsmusic.change_stream(
+                chat_id, queues.queues.get(chat_id)["file"]
             )
 
     qeue = que.get(chat_id)
