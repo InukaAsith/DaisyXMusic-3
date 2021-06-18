@@ -18,7 +18,7 @@ from typing import Dict
 
 from pytgcalls import GroupCall
 
-from DaisyXmusic.services import client
+from DaisyXMusic.services import client
 from DaisyXMusic.services.queues import queues
 
 
