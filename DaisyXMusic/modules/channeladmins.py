@@ -88,7 +88,7 @@ async def stop(_, message: Message):
         await message.reply_text("❗ Nothing is streaming!")
     else:
         try:
-            queues.queues.clear(chat_id)
+            queues.clear(chat_id)
         except QueueEmpty:
             pass
 
@@ -112,13 +112,13 @@ async def skip(_, message: Message):
     if chat_id not in callsmusic.active_chats:
         await message.reply_text("❗ Nothing is playing to skip!")
     else:
-        queues.queues.task_done(chat_id)
+        queues.task_done(chat_id)
 
-        if queues.queues.is_empty(chat_id):
+        if queues.is_empty(chat_id):
             callsmusic.stop(chat_id)
         else:
             callsmusic.change_stream(
-                chat_id, queues.queues.get(chat_id)["file"]
+                chat_id, queues.get(chat_id)["file"]
             )
 
     qeue = que.get(chat_id)
