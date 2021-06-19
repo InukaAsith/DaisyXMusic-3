@@ -875,6 +875,3 @@ async def jiosaavn(client: Client, message_: Message):
         caption=f"Playing {sname} Via Jiosaavn in linked channel",
     )
     os.remove("final.png")
-
-
-# Have u read all. If read RESPECT :-)
