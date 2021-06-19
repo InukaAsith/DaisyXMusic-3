@@ -336,7 +336,7 @@ async def m_cb(b, cb):
             queues.queues.task_done(chet_id)
 
             if queues.queues.is_empty(chet_id):
-                callsmusic.leave_group_call(chet_id)
+                callsmusic.remove_stream(chet_id)
 
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
@@ -356,7 +356,7 @@ async def m_cb(b, cb):
             except QueueEmpty:
                 pass
 
-            callsmusic.leave_group_call(chet_id)
+            callsmusic.remove_stream(chet_id)
             await cb.message.edit("Successfully Left the Chat!")
         else:
             await cb.answer("Chat is not connected!", show_alert=True)
@@ -595,7 +595,7 @@ async def play(_, message: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.join_group_call(chat_id, file_path)
+        callsmusic.set_stream(chat_id, file_path)
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
@@ -726,7 +726,7 @@ async def deezer(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.join_group_call(chat_id, file_path)
+        callsmusic.set_stream(chat_id, file_path)
 
     await res.delete()
 
@@ -864,7 +864,7 @@ async def jiosaavn(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.join_group_call(chat_id, file_path)
+        callsmusic.set_stream(chat_id, file_path)
     await res.edit("Generating Thumbnail.")
     await generate_cover(requested_by, sname, ssingers, sduration, sthumb)
     await res.delete()
