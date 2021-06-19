@@ -336,8 +336,8 @@ async def m_cb(b, cb):
 
     the_data = cb.message.reply_markup.inline_keyboard[1][0].callback_data
     if type_ == "pause":
-        if (chet_id not in callsmusic.active_calls) or (
-            callsmusic.active_calls[chet_id] == "paused"
+        if (chet_id not in callsmusic.active_chats) or (
+            callsmusic.active_chats[chet_id] == "paused"
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
@@ -431,7 +431,7 @@ async def m_cb(b, cb):
             queues.queues.task_done(chet_id)
 
             if queues.queues.is_empty(chet_id):
-                callsmusic.leave_group_call(chet_id)
+                callsmusic.remove_stream(chet_id)
 
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
@@ -451,7 +451,7 @@ async def m_cb(b, cb):
             except QueueEmpty:
                 pass
 
-            callsmusic.leave_group_call(chet_id)
+            callsmusic.remove_stream(chet_id)
             await cb.message.edit("Successfully Left the Chat!")
         else:
             await cb.answer("Chat is not connected!", show_alert=True)
@@ -630,10 +630,10 @@ async def play(_, message: Message):
             emojilist = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣",]
 
             while j < 5:
-                toxxt += f"{emojilist[j]} [Title - {results[j]['title']}](https://youtube.com{results[j]['url_suffix']})\n"
-                toxxt += f" ╚ **Duration** - {results[j]['duration']}\n"
-                toxxt += f" ╚ **Views** - {results[j]['views']}\n"
-                toxxt += f" ╚ **Channel** - {results[j]['channel']}\n\n"
+                toxxt += f"{emojilist[j]} </b>Title - [{results[j]['title']}](https://youtube.com{results[j]['url_suffix']})</b>\n"
+                toxxt += f" ╚ <b>Duration</b> - {results[j]['duration']}\n"
+                toxxt += f" ╚ <b>Views</b> - {results[j]['views']}\n"
+                toxxt += f" ╚ <b>Channel</b> - {results[j]['channel']}\n\n"
 
                 j += 1            
             koyboard = InlineKeyboardMarkup(
@@ -719,7 +719,7 @@ async def play(_, message: Message):
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         try:
-            callsmusic.join_group_call(chat_id, file_path)
+            callsmusic.set_stream(chat_id, file_path)
         except:
             message.reply("Group Call is not connected or I can't join it")
             return
@@ -867,7 +867,7 @@ async def ytplay(_, message: Message):
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         try:
-            callsmusic.join_group_call(chat_id, file_path)
+            callsmusic.set_stream(chat_id, file_path)
         except:
             message.reply("Group Call is not connected or I can't join it")
             return
@@ -1003,7 +1003,7 @@ async def deezer(client: Client, message_: Message):
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         try:
-            callsmusic.join_group_call(chat_id, file_path)
+            callsmusic.set_stream(chat_id, file_path)
         except:
             res.edit("Group call is not connected of I can't join it")
             return
@@ -1146,7 +1146,7 @@ async def jiosaavn(client: Client, message_: Message):
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         try:
-            callsmusic.join_group_call(chat_id, file_path)
+            callsmusic.set_stream(chat_id, file_path)
         except:
             res.edit("Group call is not connected of I can't join it")
             return
@@ -1257,7 +1257,7 @@ async def lol_cb(b, cb):
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
 
-        callsmusic.join_group_call(chat_id, file_path)
+        callsmusic.set_stream(chat_id, file_path)
         await cb.message.delete()
         await b.send_photo(chat_id,
             photo="final.png",
