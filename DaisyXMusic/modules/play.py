@@ -1267,4 +1267,3 @@ async def lol_cb(b, cb):
         
         os.remove("final.png")
 
-# Have u read all. If read RESPECT :-)
