@@ -718,7 +718,7 @@ async def play(_, message: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        else:
+        try:
             await callsmusic.set_stream(chat_id, file_path)
         except:
             message.reply("Group Call is not connected or I can't join it")
@@ -866,7 +866,7 @@ async def ytplay(_, message: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-       else:
+        try:
            await callsmusic.set_stream(chat_id, file_path)
         except:
             message.reply("Group Call is not connected or I can't join it")
@@ -1002,7 +1002,7 @@ async def deezer(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        else:
+        try:
             await callsmusic.set_stream(chat_id, file_path)
         except:
             res.edit("Group call is not connected of I can't join it")
@@ -1145,7 +1145,7 @@ async def jiosaavn(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        else:
+        try:
             await callsmusic.set_stream(chat_id, file_path)
         except:
             res.edit("Group call is not connected of I can't join it")
@@ -1256,7 +1256,7 @@ async def lol_cb(b, cb):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-    else:
+    try:
         await callsmusic.set_stream(chat_id, file_path)
         await cb.message.delete()
         await b.send_photo(chat_id,

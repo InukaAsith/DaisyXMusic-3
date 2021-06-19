@@ -83,7 +83,7 @@ async def stop(_, message: Message):
         except QueueEmpty:
             pass
 
-        callsmusic.remove_stream(chat_id)
+        callsmusic.stop(chat_id)
         await message.reply_text("❌ Stopped streaming!")
 
 
@@ -99,7 +99,7 @@ async def skip(_, message: Message):
         queues.queues.task_done(chat_id)
 
         if queues.queues.is_empty(chat_id):
-            callsmusic.remove_stream(chat_id)
+            callsmusic.stop(chat_id)
         else:
             callsmusic.change_stream(
                 chat_id, queues.queues.get(chat_id)["file"]
