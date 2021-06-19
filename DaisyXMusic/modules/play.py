@@ -1256,7 +1256,7 @@ async def lol_cb(b, cb):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-    try:
+    
         await callsmusic.set_stream(chat_id, file_path)
         await cb.message.delete()
         await b.send_photo(chat_id,
