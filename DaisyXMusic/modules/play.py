@@ -428,15 +428,15 @@ async def m_cb(b, cb):
         if chet_id not in callsmusic.active_chats:
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            queues.queues.task_done(chet_id)
+            queues.task_done(chet_id)
 
-            if queues.queues.is_empty(chet_id):
+            if queues.is_empty(chet_id):
                 await callsmusic.stop(chet_id)
 
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
                 await callsmusic.change_stream(
-                    chet_id, queues.queues.get(chet_id)["file"]
+                    chet_id, queues.get(chet_id)["file"]
                 )
                 await cb.answer("Skipped")
                 await cb.message.edit((m_chat, qeue), reply_markup=r_ply(the_data))
@@ -447,7 +447,7 @@ async def m_cb(b, cb):
     else:
         if chet_id in callsmusic.active_chats:
             try:
-                queues.queues.clear(chet_id)
+                queues.clear(chet_id)
             except QueueEmpty:
                 pass
 
@@ -726,7 +726,7 @@ async def play(_, message: Message):
         await message.reply_photo(
             photo="final.png",
             reply_markup=keyboard,
-            caption="▶️ **Playing** here the song requested by {} via Youtube Music 😜".format(
+            caption="▶️ **Playing** here the song requested by {} via Youtube Music".format(
                 message.from_user.mention()
             ),
         )
