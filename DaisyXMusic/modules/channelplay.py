@@ -246,7 +246,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            callsmusic.pause_stream(chet_id)
+            await callsmusic.pause_stream(chet_id)
 
             await cb.answer("Music Paused!")
             await cb.message.edit(
@@ -259,7 +259,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            callsmusic.resume_stream(chet_id)
+            await callsmusic.resume_stream(chet_id)
             await cb.answer("Music Resumed!")
             await cb.message.edit(
                 updated_stats(conv, qeue), reply_markup=r_ply("pause")
@@ -294,7 +294,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already playng", show_alert=True)
         else:
-            callsmusic.resume_stream(chet_id)
+            await callsmusic.resume_stream(chet_id)
             await cb.answer("Music Resumed!")
     elif type_ == "cpuse":
         if (chet_id not in callsmusic.active_chats) or (
@@ -302,7 +302,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already paused", show_alert=True)
         else:
-            callsmusic.pause_stream(chet_id)
+            await callsmusic.pause_stream(chet_id)
 
             await cb.answer("Music Paused!")
     elif type_ == "ccls":
@@ -352,7 +352,7 @@ async def m_cb(b, cb):
     else:
         if chet_id in callsmusic.active_chats:
             try:
-                callsmusic.queues.clear(chet_id)
+               queues.queues.clear(chet_id)
             except QueueEmpty:
                 pass
 
