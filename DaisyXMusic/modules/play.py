@@ -1264,6 +1264,4 @@ async def lol_cb(b, cb):
             reply_markup=keyboard,
             caption=f"▶️ **Playing** here the song requested by {r_by.mention} via Youtube Music 😎",
         )
-        
         os.remove("final.png")
-
