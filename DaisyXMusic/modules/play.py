@@ -341,8 +341,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            await callsmusic.pause(chet_id)
-
+            callsmusic.pause(chet_id)
             await cb.answer("Music Paused!")
             await cb.message.edit(
                 updated_stats(m_chat, qeue), reply_markup=r_ply("play")
@@ -354,7 +353,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            await callsmusic.resume(chet_id)
+            callsmusic.resume(chet_id)
             await cb.answer("Music Resumed!")
             await cb.message.edit(
                 updated_stats(m_chat, qeue), reply_markup=r_ply("pause")
@@ -389,7 +388,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already playng", show_alert=True)
         else:
-            await callsmusic.resume(chet_id)
+            callsmusic.resume(chet_id)
             await cb.answer("Music Resumed!")
     elif type_ == "puse":
         if (chet_id not in callsmusic.active_chats) or (
@@ -397,8 +396,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already paused", show_alert=True)
         else:
-            await callsmusic.pause(chet_id)
-
+            callsmusic.pause(chet_id)
             await cb.answer("Music Paused!")
     elif type_ == "cls":
         await cb.answer("Closed menu")
@@ -429,10 +427,8 @@ async def m_cb(b, cb):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
             queues.task_done(chet_id)
-
             if queues.is_empty(chet_id):
-                await callsmusic.stop(chet_id)
-
+                callsmusic.stop(chet_id)
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
                 await callsmusic.set_stream(
@@ -630,7 +626,7 @@ async def play(_, message: Message):
             emojilist = ["1️⃣","2️⃣","3️⃣","4️⃣","5️⃣",]
 
             while j < 5:
-                toxxt += f"{emojilist[j]} </b>Title - [{results[j]['title']}](https://youtube.com{results[j]['url_suffix']})</b>\n"
+                toxxt += f"{emojilist[j]} <b>Title - [{results[j]['title']}](https://youtube.com{results[j]['url_suffix']})</b>\n"
                 toxxt += f" ╚ <b>Duration</b> - {results[j]['duration']}\n"
                 toxxt += f" ╚ <b>Views</b> - {results[j]['views']}\n"
                 toxxt += f" ╚ <b>Channel</b> - {results[j]['channel']}\n\n"
