@@ -246,7 +246,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            await callsmusic.pause_stream(chet_id)
+            await callsmusic.pause(chet_id)
 
             await cb.answer("Music Paused!")
             await cb.message.edit(
@@ -259,7 +259,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            await callsmusic.resume_stream(chet_id)
+            await callsmusic.resume(chet_id)
             await cb.answer("Music Resumed!")
             await cb.message.edit(
                 updated_stats(conv, qeue), reply_markup=r_ply("pause")
@@ -294,7 +294,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already playng", show_alert=True)
         else:
-            await callsmusic.resume_stream(chet_id)
+            await callsmusic.resume(chet_id)
             await cb.answer("Music Resumed!")
     elif type_ == "cpuse":
         if (chet_id not in callsmusic.active_chats) or (
@@ -302,7 +302,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already paused", show_alert=True)
         else:
-            await callsmusic.pause_stream(chet_id)
+            await callsmusic.pause(chet_id)
 
             await cb.answer("Music Paused!")
     elif type_ == "ccls":
@@ -336,11 +336,11 @@ async def m_cb(b, cb):
             queues.task_done(chet_id)
 
             if queues.is_empty(chet_id):
-                callsmusic.stop(chet_id)
+                await callsmusic.stop(chet_id)
 
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
-                callsmusic.change_stream(
+                await callsmusic.set_stream(
                     chet_id, queues.get(chet_id)["file"]
                 )
                 await cb.answer("Skipped")
@@ -356,7 +356,7 @@ async def m_cb(b, cb):
             except QueueEmpty:
                 pass
 
-            callsmusic.stop(chet_id)
+            await callsmusic.stop(chet_id)
             await cb.message.edit("Successfully Left the Chat!")
         else:
             await cb.answer("Chat is not connected!", show_alert=True)
