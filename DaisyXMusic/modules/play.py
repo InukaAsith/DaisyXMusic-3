@@ -341,7 +341,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            await callsmusic.pause_stream(chet_id)
+            await callsmusic.pause(chet_id)
 
             await cb.answer("Music Paused!")
             await cb.message.edit(
@@ -354,7 +354,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected!", show_alert=True)
         else:
-            await callsmusic.resume_stream(chet_id)
+            await callsmusic.resume(chet_id)
             await cb.answer("Music Resumed!")
             await cb.message.edit(
                 updated_stats(m_chat, qeue), reply_markup=r_ply("pause")
@@ -389,7 +389,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already playng", show_alert=True)
         else:
-            await callsmusic.resume_stream(chet_id)
+            await callsmusic.resume(chet_id)
             await cb.answer("Music Resumed!")
     elif type_ == "puse":
         if (chet_id not in callsmusic.active_chats) or (
@@ -397,7 +397,7 @@ async def m_cb(b, cb):
         ):
             await cb.answer("Chat is not connected or already paused", show_alert=True)
         else:
-            await callsmusic.pause_stream(chet_id)
+            await callsmusic.pause(chet_id)
 
             await cb.answer("Music Paused!")
     elif type_ == "cls":
@@ -435,7 +435,7 @@ async def m_cb(b, cb):
 
                 await cb.message.edit("- No More Playlist..\n- Leaving VC!")
             else:
-                await callsmusic.change_stream(
+                await callsmusic.set_stream(
                     chet_id, queues.get(chet_id)["file"]
                 )
                 await cb.answer("Skipped")
@@ -447,7 +447,7 @@ async def m_cb(b, cb):
     else:
         if chet_id in callsmusic.active_chats:
             try:
-                queues.clear(chet_id)
+               queues.clear(chet_id)
             except QueueEmpty:
                 pass
 
