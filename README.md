@@ -121,6 +121,7 @@ DaisyXmusic is a modified version of [Callsmusic](https://github.com/callsmusic/
 - [Rojserbest](http://github.com/rojserbes): Dev
 - [Wrench](https://github.com/EverythingSuckz/): Dev
 - [Bemro](https://github.com/bemroofficial): Dev
+- [Technical-Hunter](https://github.com/Technical-Hunter): Dev
 - [QueenArzoo](https://github.com/QueenArzoo): Dev
 - [lucifeermorningstar](https://github.com/lucifeermorningstar): Dev
 - [AuraXNetwork](https://github.com/AuraXNetwork/AuraXMusicBot)
