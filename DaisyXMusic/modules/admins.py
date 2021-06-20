@@ -27,6 +27,7 @@ from DaisyXMusic.helpers.decorators import authorized_users_only, errors
 from DaisyXMusic.helpers.filters import command
 from DaisyXMusic.helpers.filters import other_filters
 from DaisyXMusic.services.callsmusic import callsmusic
+from DaisyXMusic.services.queues import queues
 
 
 @Client.on_message(filters.command("adminreset"))
