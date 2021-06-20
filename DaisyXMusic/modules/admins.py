@@ -52,7 +52,7 @@ async def pause(_, message: Message):
     ):
         await message.reply_text("❗ Nothing is playing!")
     else:
-        callsmusic.pause_stream(chat_id)
+        await callsmusic.pause(chat_id)
         await message.reply_text("▶️ Paused!")
 
 
@@ -66,7 +66,7 @@ async def resume(_, message: Message):
     ):
         await message.reply_text("❗ Nothing is paused!")
     else:
-        callsmusic.resume_stream(chat_id)
+        await callsmusic.resume(chat_id)
         await message.reply_text("⏸ Resumed!")
 
 
@@ -83,7 +83,7 @@ async def stop(_, message: Message):
         except QueueEmpty:
             pass
 
-        callsmusic.stop(chat_id)
+        await callsmusic.stop(chat_id)
         await message.reply_text("❌ Stopped streaming!")
 
 
@@ -99,9 +99,9 @@ async def skip(_, message: Message):
         queues.task_done(chat_id)
 
         if queues.is_empty(chat_id):
-            callsmusic.stop(chat_id)
+            await callsmusic.stop(chat_id)
         else:
-            callsmusic.change_stream(
+            await callsmusic.set_stream(
                 chat_id, queues.get(chat_id)["file"]
             )
 
