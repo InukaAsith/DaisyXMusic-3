@@ -27,7 +27,7 @@ from DaisyXMusic.helpers.decorators import authorized_users_only, errors
 from DaisyXMusic.helpers.filters import command 
 from DaisyXMusic.helpers.filters import other_filters
 from DaisyXMusic.services.callsmusic import callsmusic
-
+from DaisyXMusic.services.queues import queues
 
 
 @Client.on_message(filters.command(["channelpause","cpause"]) & filters.group & ~filters.edited)
@@ -47,7 +47,7 @@ async def pause(_, message: Message):
     ):
         await message.reply_text("❗ Nothing is playing!")
     else:
-        await callsmusic.pause(chat_id)
+        callsmusic.pause(chat_id)
         await message.reply_text("▶️ Paused!")
 
 
@@ -68,7 +68,7 @@ async def resume(_, message: Message):
     ):
         await message.reply_text("❗ Nothing is paused!")
     else:
-        await callsmusic.resume(chat_id)
+        callsmusic.resume(chat_id)
         await message.reply_text("⏸ Resumed!")
 
 
@@ -118,7 +118,8 @@ async def skip(_, message: Message):
             await callsmusic.stop(chat_id)
         else:
             await callsmusic.set_stream(
-                chat_id, queues.get(chat_id)["file"]
+                chat_id, 
+                queues.get(chat_id)["file"]
             )
 
     qeue = que.get(chat_id)
