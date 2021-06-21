@@ -457,9 +457,10 @@ async def play(_, message: Message):
     )
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
-            raise DurationLimitError(
+            await lel.edit(
                 f"❌ Videos longer than {DURATION_LIMIT} minute(s) aren't allowed to play!"
             )
+            return
         keyboard = InlineKeyboardMarkup(
             [
                 [
@@ -505,6 +506,16 @@ async def play(_, message: Message):
             )
             print(str(e))
             return
+        try:    
+            secmul, dur, dur_arr = 1, 0, duration.split(':')
+            for i in range(len(dur_arr)-1, -1, -1):
+                dur += (int(dur_arr[i]) * secmul)
+                secmul *= 60
+            if (dur / 60) > DURATION_LIMIT:
+                 await lel.edit(f"❌ Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!")
+                 return
+        except:
+            pass        
         dlurl = url
         dlurl=dlurl.replace("youtube","youtubepp")
         keyboard = InlineKeyboardMarkup(
@@ -549,7 +560,16 @@ async def play(_, message: Message):
             )
             print(str(e))
             return
-
+        try:    
+            secmul, dur, dur_arr = 1, 0, duration.split(':')
+            for i in range(len(dur_arr)-1, -1, -1):
+                dur += (int(dur_arr[i]) * secmul)
+                secmul *= 60
+            if (dur / 60) > DURATION_LIMIT:
+                 await lel.edit(f"❌ Videos longer than {DURATION_LIMIT} minutes aren't allowed to play!")
+                 return
+        except:
+            pass
         dlurl = url
         dlurl=dlurl.replace("youtube","youtubepp")
         keyboard = InlineKeyboardMarkup(
